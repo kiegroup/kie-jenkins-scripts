@@ -9,7 +9,7 @@ String repository = 'jenkins-pipeline-shared-libraries'
 // Creation of folders where jobs are stored
 folder('KIE')
 folder("KIE/${baseBranch}")
-folder("KIE/${baseBranch}/" + Constants.PULL_REQUEST_FOLDER) {
+folder("KIE/${baseBranch}/${Constants.PULL_REQUEST_FOLDER}") {
     displayName(Constants.PULL_REQUEST_FOLDER_DISPLAY_NAME)
 }
 def folderPath = ("KIE/${baseBranch}/" + Constants.PULL_REQUEST_FOLDER)
