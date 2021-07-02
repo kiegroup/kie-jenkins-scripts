@@ -7,18 +7,16 @@ String ghJenkinsfilePwd = 'kie-ci'
 String repository = 'jenkins-pipeline-shared-libraries'
 
 // Creation of folders where jobs are stored
-folder("KIE")
+folder('KIE')
 folder("KIE/${baseBranch}")
-folder("KIE/${baseBranch}/" + Constants.PULL_REQUEST_FOLDER){
+folder("KIE/${baseBranch}/${Constants.PULL_REQUEST_FOLDER}") {
     displayName(Constants.PULL_REQUEST_FOLDER_DISPLAY_NAME)
 }
 def folderPath = ("KIE/${baseBranch}/" + Constants.PULL_REQUEST_FOLDER)
 
-
 // jobs for master branch don't use the branch in the name
 String jobName = "${folderPath}/${repository}-${baseBranch}.pr"
 String repoUrl = "https://github.com/${ghOrgUnit}/${repository}/"
-
 
 pipelineJob(jobName) {
     description("""Created automatically by Jenkins job DSL plugin. Do not edit manually! The changes will be lost next time the job is generated.
@@ -83,10 +81,10 @@ pipelineJob(jobName) {
                     blackListCommitAuthor('')
                     whiteListTargetBranches {
                         ghprbBranch {
-                            branch('master')
+                            branch(baseBranch)
                         }
                     }
-                    blackListTargetBranches {}
+                    blackListTargetBranches { }
                     includedRegions('')
                     excludedRegions('')
                     extensions {
@@ -94,7 +92,7 @@ pipelineJob(jobName) {
                             commitStatusContext('Build&Test')
                             addTestResults(true)
                             showMatrixStatus(false)
-                            statusUrl('${BUILD_URL}display/redirect')
+                            statusUrl('')
                             triggeredStatus('')
                             startedStatus('')
                         }
