@@ -2,7 +2,7 @@ import org.kie.jenkins.jobdsl.Constants
 
 def kieVersion=Constants.KIE_PREFIX + ".Final"
 def baseBranch=Constants.BRANCH
-def releaseBranch="r7.53.0.Final"
+def releaseBranch="r7.58.0.Final"
 def organization=Constants.GITHUB_ORG_UNIT
 def m2Dir = Constants.LOCAL_MVN_REP
 def MAVEN_OPTS="-Xms1g -Xmx3g"
@@ -666,8 +666,8 @@ matrixJob("${folderPath}/community-release-${baseBranch}-kieWbTestsMatrix") {
     }
 
     axes {
-        labelExpression("label_exp", "kie-rhel7&&kie-mem8g&&gui-testing")
-        text("container", "wildfly")
+        labelExpression("label_exp","kie-rhel7&&kie-mem8g&&gui-testing")
+        text("container","wildfly")
         text("war","business-central")
         jdk("${javadk}")
         text("browser","firefox")
@@ -741,14 +741,6 @@ matrixJob("${folderPath}/community-release-${baseBranch}-kieWbTestsMatrix") {
             mavenOpts("-Xms1024m -Xmx1536m")
             providedSettings("3f317dd7-4d08-4ee4-b9bb-969c309e782c")
         }
-        maven{
-            mavenInstallation("${mvnVersion}")
-            goals("-nsu -B -e -fae clean verify -Dintegration-tests=true")
-            rootPOM("kie-wb-common-dmn/kie-wb-common-dmn-webapp-kogito-runtime/pom.xml")
-            properties("webdriver.firefox.bin":"/opt/tools/firefox-60esr/firefox-bin")
-            mavenOpts("-Xms1024m -Xmx1536m")
-            providedSettings("3f317dd7-4d08-4ee4-b9bb-969c309e782c")
-        }
     }
 }
 
@@ -765,7 +757,7 @@ matrixJob("${folderPath}/community-release-${baseBranch}-kieServerMatrix") {
     description("This job: <br> - Runs the KIE Server integration tests on mutiple supported containers and JDKs <br> IMPORTANT: Created automatically by Jenkins job DSL plugin. Do not edit manually! The changes will get lost next time the job is generated. ")
 
     // Label which specifies which nodes this job can run on.
-    label("master")
+    label('kie-rhel7&&kie-mem8g&&!master')
 
     parameters {
         stringParam("kieVersion", "${kieVersion}", "please edit the version of the KIE release <br> i.e. typically <b> major.minor.micro.<extension> </b>7.1.0.Beta1 for <b> community </b>or <b> major.minor.micro.<yyymmdd>-productized </b>(7.1.0.20170514-productized) for <b> productization </b> <br> Version to test. Will be supplied by the parent job. <br> Normally the KIE_VERSION will be supplied by parent job <br> ******************************************************** <br> ")
@@ -779,13 +771,11 @@ matrixJob("${folderPath}/community-release-${baseBranch}-kieServerMatrix") {
 
     axes {
         jdk("${javadk}")
-        text("container", "wildfly", "eap7", "tomcat9")
-        labelExpression("label_exp", "kie-linux&&kie-mem8g")
+        text("container", "wildfly","eap7","tomcat9")
+        labelExpression("label_exp","kie-linux&&kie-mem8g")
     }
 
     childCustomWorkspace("\${SHORT_COMBINATION}")
-
-    label('kie-rhel7&&kie-mem8g&&!master')
 
     logRotator {
         numToKeep(3)
