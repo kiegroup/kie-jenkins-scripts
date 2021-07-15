@@ -27,7 +27,7 @@
       - new java.lang.StringBuilder java.lang.String
     node_version: 12.16.2
     node_setup_url: https://rpm.nodesource.com/setup_12.x
-    buildchain_version: 2.3.4
+    buildchain_version: 2.3.5
     npmclilogin_version: ^0.1.1
     # rhel_version=7|8 variable is set by Packer when calling Ansible, you have to set it when running the playbook directly
     # e.g. by using --extra-vars rhel_version=7
