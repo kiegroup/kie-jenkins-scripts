@@ -75,6 +75,7 @@ pipeline{
         stage('trigger kogito-tooling nightly job main') {
             steps {
                 build job: 'kogito-tooling.nightly/main', propagate: false, wait: true, parameters: [
+                        [\$class: 'StringParameterValue', name: 'DEPLOYMENT_REPO_URL', value: 'https://bxms-qe.rhev-ci-vms.eng.rdu2.redhat.com:8443/nexus/service/local/repositories/scratch-release-rhba-master/content-compressed'],
                         [\$class: 'StringParameterValue', name: 'UMB_VERSION', value: 'main'],
                         [\$class: 'StringParameterValue', name: 'PRODUCT_VERSION', value: '7.11.0'],
                         [\$class: 'BooleanParameterValue', name: 'SKIP_TESTS', value: true]
